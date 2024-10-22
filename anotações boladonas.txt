@@ -68,3 +68,17 @@ set date brit ou british
 
 Muda set de ano para até 2039
 set epoch to 1940
+
+Liga os séculos(os 4 caracteres do ano)
+set century on
+
+Transforma data em string
+DToC(caracter to Date)
+
+somando ou subtraindo datas, se adquire dias
+
+Estrutura do for
+
+for i := n to maxN
+	sngj
+next
