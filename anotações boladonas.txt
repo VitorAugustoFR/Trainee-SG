@@ -1,0 +1,70 @@
+abrir no editor lá
+q nomeDoArquivo.prg
+
+debug
+hbmk2 nomeDoArquivo.prg
+
+checar se criou o executavel
+dir
+
+executar
+nomeDoArquivo.exe
+
+Convert.ToString do harbour
+str(váriavelNumero)
+
+excluir espaços
+alltrim
+
+Declarar string como atributo de classe(Data Base)
+nVariavel := space(tamanho da variavel)
+
+get sempre recebe em string
+
+checa se é decimal
+IsDec(número)
+
+Delimita o número de casas
+ex:
+	int:
+		picture"999"
+	float:
+		picture"999.99"
+
+converte . para ,
+@E
+
+faz o papel do str com mascara
+transform(Variavel, mascara)
+ex:
+transform(nIdade, "@E 999") 
+
+sempre usar o endif(estava tendo problemas com)
+
+checa e valida entrada de número
+valid nNumero >= 0
+
+
+duplica a linha desenhada
+@ 00,00 to xx,xx double
+
+Limpa a área selecionada
+@ 00,00 clear to xx,xx
+
+Mascara que torna string em maiusculo
+"@!"
+
+insere a data atual (do pc)
+date()
+
+cria uma data vazia
+CToD("")
+
+Passa a data 
+CtoD("01,01,24")
+
+Mudar padrao do americano para o britânico
+set date brit ou british
+
+Muda set de ano para até 2039
+set epoch to 1940
