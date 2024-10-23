@@ -10,6 +10,6 @@ nQuantidadeNome := 0
 @ 02,41 get nQuantidadeNome
 read
 
-for i := 0 to (nQuantidadeNome - 1)
+for i := 1 to nQuantidadeNome
     @ i,01 say cNome
 next

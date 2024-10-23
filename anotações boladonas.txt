@@ -16,7 +16,7 @@ str(váriavelNumero)
 excluir espaços
 alltrim
 
-Declarar string como atributo de classe(Data Base)
+Reserva espaço na memória para string
 nVariavel := space(tamanho da variavel)
 
 get sempre recebe em string
@@ -44,7 +44,6 @@ sempre usar o endif(estava tendo problemas com)
 checa e valida entrada de número
 valid nNumero >= 0
 
-
 duplica a linha desenhada
 @ 00,00 to xx,xx double
 
@@ -58,7 +57,7 @@ insere a data atual (do pc)
 date()
 
 cria uma data vazia
-CToD("")
+CToD("")(caracter to Date)
 
 Passa a data 
 CtoD("01,01,24")
@@ -73,7 +72,7 @@ Liga os séculos(os 4 caracteres do ano)
 set century on
 
 Transforma data em string
-DToC(caracter to Date)
+DToC(Date to caracter)
 
 somando ou subtraindo datas, se adquire dias
 
@@ -82,3 +81,6 @@ Estrutura do for
 for i := n to maxN
 	sngj
 next
+
+inicializar numerico com zero o torna vazio
+nNumero := 0
