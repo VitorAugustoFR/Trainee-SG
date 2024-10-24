@@ -1,0 +1,10 @@
+Application Internal Error - C:\Program Files (x86)\SG Sistemas\Projeto SGTrainee\workdir\exe22.exe
+Terminated at: 2024.10.23 21:17:27
+Unrecoverable error 9006: hb_xgrab can't allocate memory
+Called from __CLSINST(0)
+Called from HBCLASS:INSTANCE(0) in ../../../tclass.prg
+Called from GET(0) in ../../../tget.prg
+Called from GETNEW(0) in ../../../tget.prg
+Called from __GET(0) in ../../../tgetint.prg
+Called from EXE22(25) in exe22.prg
+------------------------------------------------------------------------

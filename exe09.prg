@@ -30,5 +30,3 @@ read
 @ 09,01 say"Numero Inteiro: " + nInteiro
 @ 10,01 say"Numero Decimal: " + transform(nDecimal, "@E 99999.99")
 @ 11,01 say"Frase: " + cString
-
-//resolver problemas de data

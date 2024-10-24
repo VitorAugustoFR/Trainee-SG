@@ -84,3 +84,15 @@ next
 
 inicializar numerico com zero o torna vazio
 nNumero := 0
+
+Funciona que nem em python(Sem {} e sem ;)
+ Precisa de endif
+	if elseif else endif
+
+Conta o número caracteres em uma váriavel
+nCaractere := Len(cVariavel)
+
+Inverte os caracteres
+cStringEspecifica := SubStr(cVariavel, posição do caractere, quantidade de caracteres que vai pegar(para inverter usar apenas 1)
+
+
