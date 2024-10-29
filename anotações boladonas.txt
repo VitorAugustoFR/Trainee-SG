@@ -96,3 +96,8 @@ Inverte os caracteres
 cStringEspecifica := SubStr(cVariavel, posição do caractere, quantidade de caracteres que vai pegar(para inverter usar apenas 1)
 
 
+$ checa se um dado valor é contido em um outro valor
+
+'a' $ 'abc' V
+'a' $ 'Abc' F
+(Sempre checa se é exatamente igual)
