@@ -1,7 +1,9 @@
 clear
 
 nNome := "Clebin do Pneu"
+nVariavel := 0
 
-for i := 0 to 10
-    @i,i say nNome
-next
+do while nVariavel < 10
+    @ nVariavel,nVariavel say nNome
+    nVariavel++
+enddo

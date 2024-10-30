@@ -101,3 +101,20 @@ $ checa se um dado valor é contido em um outro valor
 'a' $ 'abc' V
 'a' $ 'Abc' F
 (Sempre checa se é exatamente igual)
+
+Quebra o loop
+exit
+
+Volta ao inicio do loop
+loop
+
+Sai do loop
+no console:
+alt + c
+
+inkey()
+//pesquisar sobre
+
+Checa ultima tecla pressionada
+lastkey() -> codigo da tecla
+27 codigo do ESC

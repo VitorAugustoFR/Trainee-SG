@@ -1,12 +1,16 @@
 clear
 
 nNumero := 0
+nVariavelUm := 1
+nVariavelDois := 1
 
-for i := 1 to 10
+do while nVariavelUm <= 10
     nNumero++
-    @ i,01 say AllTrim(Str(nNumero))
-next
-for i := 1 to 10
-    @ i,04 say AllTrim(Str(nNumero))
+    @ nVariavelUm,01 say AllTrim(Str(nNumero))
+    nVariavelUm++
+enddo
+do while nVariavelDois <= 10
+    @ nVariavelDois,04 say AllTrim(Str(nNumero))
     nNumero--
-next
+    nVariavelDois++
+enddo
