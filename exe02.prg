@@ -17,7 +17,11 @@ do while .t.
     read
 
     if LastKey() == 27
-        exit
+        nOpcao := Alert("Deseja sair?", {"Sim","Nao"})
+        if nOpcao == 1
+            exit
+        endif
+        loop
     endif
 
     @ 05,01 say"Seu nome: " + cNome

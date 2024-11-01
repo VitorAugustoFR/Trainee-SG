@@ -118,3 +118,12 @@ inkey()
 Checa ultima tecla pressionada
 lastkey() -> codigo da tecla
 27 codigo do ESC
+
+Popup de alerta
+Alert (texto da caixa, opção 1, opção 2)
+
+Para todo o console
+set color 'Cor caractere/cor de fundo'
+
+Colocar ao fim de get e/ou say
+color 'Cor caractere/cor de fundo'

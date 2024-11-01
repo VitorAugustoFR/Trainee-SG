@@ -24,6 +24,14 @@ nPrecoC := 0
 
 @ 00,00 to 12,110
 
+//pegando o nome e a idade
+@ 10,01 say "Nome:"
+@ 11,01 say "Idade:"
+
+@ 10,06 get cNome
+@ 11,06 get nIdade
+read
+
 @ 01,01 say "SEQ       Produto          QTD        Preco       Valor"
 @ 02,01 say " 1"
 @ 03,01 say " 2"
@@ -68,13 +76,6 @@ nValorTotal := nValorProdutoA + nValorProdutoB + nValorProdutoC
 @ 07,17 get dCompra
 @ 08,19 get dEntrega Valid dEntrega >= (dCompra += 3)
 
-//pegando o nome e a idade
-@ 10,01 say "Nome:"
-@ 11,01 say "Idade:"
-
-@ 10,06 get cNome
-@ 11,06 get nIdade
-read
 
 //Nota fiscal
 clear
