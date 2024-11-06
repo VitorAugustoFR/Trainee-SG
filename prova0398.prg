@@ -7,7 +7,7 @@ clear
 //Numero de empregados
 nEmpregados := 1
 //Variaveis colaborador
-cNomeColaborador := space(50)
+cNomeColaborador := space(20)
 cSexo := space(1)
 dNacimento := CToD("")
 dAdmissao := CToD("")
@@ -18,7 +18,11 @@ nAdicionalInsalubridade := 0
 
 //Variaveis adicionais
 nAnoAdmissao := Year(dAdmissao)
+nMesAdmissao ;= Month(dAdmissao)
+nDiaAdmissao := Dia(dAdmissao)
 nAnoDemissao := Year(dDemissao)
+nMesDemissao ;= Month(dDemissao)
+nDiaDemissao := Dia(dDemissao)
 nHomens := 0
 nHomensBonus := 0
 nHomensAdmissao := 0
@@ -26,11 +30,17 @@ nMulheres := 0
 nMulheres85 := 0
 nTotalAposentados := 0
 
+nAnoNascimento := Year(dNacimento)
+nMesNascimento := Month(dNacimento)
+nDiaNascimento := Day(dNacimento)
+
 nValorAposentadoria := 0
 
 nEmpregados2 := 1
 
 nValorTotal := 0 
+
+bLoop := 0
 
 do while nEmpregados >= nEmpregados2
     @ 00,00 to 13,80
@@ -50,7 +60,7 @@ do while nEmpregados >= nEmpregados2
 
     @ 01,52 get nEmpregados picture "999" Valid !Empty(nEmpregados)
     @ 05,52 get cNomeColaborador Valid !Empty(cNomeColaborador)
-    @ 06,52 get cSexo Valid !Empty(cSexo)
+    @ 06,52 get cSexo picture "@!" Valid cSexo $ "FM"
     @ 07,52 get dNacimento Valid !Empty(dNacimento)
     @ 08,52 get dAdmissao Valid !Empty(dAdmissao)
     @ 09,52 get dDemissao Valid !Empty(dNacimento)
@@ -58,65 +68,91 @@ do while nEmpregados >= nEmpregados2
     @ 11,52 get nAdicionalNoturno
     @ 12,52 get nAdicionalInsalubridade
     read
-        //aptidão para receber aposentadoria
+
+    //aptidão para receber aposentadoria
     if cSexo == "M"
-        if (dNacimento - Date()) >= 59 .and. (dDemissao - dAdmissao) >= 27
+        if (Year(date()) - nAnoNascimento) >= 59 .and. (nAnoDemissao - nAnoAdmissao) >= 27
+            if (Month(date()) - nMesNascimento) == 0 .and. (nMesDemissao - nMesAdmissao) == 0
+                if (Day(Date()) - nDiaNascimento) >= 0 .and. (nDiaDemissao - nDiaAdmissao) >= 0
+                    bLoop := 1
+                endif
+            elseif (Month(date()) - nMesNascimento) > 0 .and. (nMesDemissao - nMesAdmissao) > 0
+                bLoop := 1
+            endif
+        else
+            bLoop := 0
         endif
+    endif
     elseif cSexo == "F"
-        if (dNacimento - Date()) >= 55 .and. (dDemissao - dAdmissao) >= 22
+        if (Year(date()) - nAnoNascimento) >= 55 .and. (nAnoDemissao - nAnoAdmissao) >= 22
+            if (Month(date()) - nMesNascimento) == 0 .and. (nMesDemissao - nMesAdmissao) == 0
+                if (Day(Date()) - nDiaNascimento) >= 0 .and. (nDiaDemissao - nDiaAdmissao) >= 0
+                    bLoop := 1
+                endif
+            elseif (Month(date()) - nMesNascimento) > 0 .and. (nMesDemissao - nMesAdmissao) > 0
+                bLoop := 1
+            endif
+        else
+            bLoop := 0
         endif
     endif
 
-    //Calculo da remuneracao da aposentadoria
-    if nAdicionalNoturno > 0 
-        nValorAposentadoria += (nSalarioBase * nAdicionalNoturno)/100
-    elseif nAdicionalInsalubridade > 0
-        nValorAposentadoria += (nSalarioBase * nAdicionalInsalubridade)/100
-    endif
+    do while bLoop == 1
+        //Calculo da remuneracao da aposentadoria
+        if nAdicionalNoturno > 0 
+            nValorAposentadoria += (nSalarioBase * nAdicionalNoturno)/100
+        elseif nAdicionalInsalubridade > 0
+            nValorAposentadoria += (nSalarioBase * nAdicionalInsalubridade)/100
+        endif
 
-    if nAnoDemissao >= 2010 .or. nAnoDemissao <= 2015
-        nValorAposentadoria += (nSalarioBase * 6) / 100
-    elseif nAnoDemissao >= 2012 .or. nAnoDemissao <= 2020
-        nValorAposentadoria -= (nSalarioBase * 2) / 100
-    endif
+        if nAnoDemissao >= 2010 .or. nAnoDemissao <= 2015
+            nValorAposentadoria += (nSalarioBase * 6) / 100
+        elseif nAnoDemissao >= 2012 .or. nAnoDemissao <= 2020
+            nValorAposentadoria -= (nSalarioBase * 2) / 100
+        endif
 
-    nValorTotal += nValorAposentadoria
-    //calculos quadro
-    //Numero de homens e mulheres aposentados(as)
-    if cSexo == "M"
-        nHomens++
-    elseif cSexo == "F"
-        nMulheres++ 
-    endif
+        nValorTotal += nValorAposentadoria
+        //calculos quadro
+        //Numero de homens e mulheres aposentados(as)
+        if cSexo == "M"
+            nHomens++
+        elseif cSexo == "F"
+            nMulheres++ 
+        endif
 
-    //Mulheres acima de 85 anos
-    if cSexo == "F" .and. (dNacimento - Date()) > 85
-        nMulheres85++
-    endif
+        //Mulheres acima de 85 anos
+        if cSexo == "F" .and. (dNacimento - Date()) > 85
+            nMulheres85++
+        endif
 
-        //Homens admitidos antes de 2006
-    if cSexo == "M" .and. nAnoAdmissao < 2006
-        nHomensAdmissao++
-    endif
+            //Homens admitidos antes de 2006
+        if cSexo == "M" .and. nAnoAdmissao < 2006
+            nHomensAdmissao++
+        endif
 
-    //Homens que receberam algum tipo de bonus
-    if cSexo == "M" .and. (nAdicionalInsalubridade > 0 .or. nAdicionalNoturno > 0)
-        nHomensBonus++ 
-    endif
+        //Homens que receberam algum tipo de bonus
+        if cSexo == "M" .and. (nAdicionalInsalubridade > 0 .or. nAdicionalNoturno > 0)
+            nHomensBonus++ 
+        endif
 
-    if LastKey() == 27
-        nOpcao2 := Alert("Oque deseja fazer?", {"Cancelar","Retornar","Processar"})
-        if nOpcao2 == 1
-            exit
-        elseif nOpcao2 == 2
+        if LastKey() == 27
+            nOpcao2 := Alert("Oque deseja fazer?", {"Cancelar","Retornar","Processar"})
+            if nOpcao2 == 1
+                exit
+            elseif nOpcao2 == 2
+                loop
+                //duvida
+            elseif nOpcao2 == 3
+                
+            endif
             loop
-        elseif nOpcao2 == 3
         endif
-        loop
-    endif
+    enddo
 
     nEmpregados2++
 enddo
+
+nValorTotal += nSalarioBase
 
 clear
 //quadro
