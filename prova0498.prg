@@ -1,59 +1,69 @@
 set date brit
 set epoch to 1940
+set message to 07
+set wrap on
 
 clear
 
+//Cadastrar
 nCodigo := 0
-cSenha := space(12)
-dCadastro := CToD("")
+cGuardarSenha := space()
+cGuardarData := space()
 
+//Procurar
 nCodigoProcurar := 0
+bCodigoExiste := .f.
+nPegarSenha := 12 * nCodigo
+nPegarSenha1 := nPegarSenha - 12
+nPegarData := 8 * nCodigo
+nPegarData1 := nPegarData - 8
 
+//Menu principal
 cMenu := space(1)
 
+//Sair
 cSair := space(1)
 
+//Booleans
 bLoop := 1
 bCadastrar := 0
 bConsultar := 0
 
 do while bLoop == 1
     //menu
+
     @ 00,00 to 08,47
     @ 02,00 to 08,47
     @ 06,00 to 08,47
 
     @ 01,01 say "Escolha oque fazer dentre as seguintes opcoes:"
-    @ 03,01 say "1 - Cadastrar"
-    @ 04,01 say "2 - Consultar"
-    @ 05,01 say "3 - Sair"
-    @ 07,01 say "Digite o numero da opcao desejada: "
+    @ 03,01 prompt "1 - Cadastrar" message "Cadastrar codigo"
+    @ 04,01 prompt "2 - Consultar" message "Consultar codigo"
+    @ 05,01 prompt "3 - Sair     " message "Sair do programa"
+    menu to nOpcao
 
-    //                                     erro quantia de caracteres
-    @ 07,36 get cMenu Valid cMenu $ "123" //.and. cSenha $ "1234567890" .and. cSenha $ 'qwertyuiopasdfghjklzxcvbnm' .and. cSenha $ 'QWERTYUIOPASDFGHJKLZXCVBNM' .and. cSenha $ "'!@#$%¨&*()_-+=`[{~^/?;:.>,<\|}]"
-    read
-
-    if cMenu == "1"
+    if nOpcao == 1
         bCadastrar := 1
-    elseif cMenu == "2"
+    elseif nOpcao == 2
         bConsultar := 1
-    elseif cMenu == "3"
-        bLoop := 0
+    elseif nOpcao == 3
+        clear
+        exit
     endif
 
-    if LastKey() == 27
-        nOpcao1 := Alert("Oque deseja fazer?", {"Continuar","Sair"})
-        if nOpcao1 == 1
-            loop
-        elseif nOpcao1 == 2
-            clear
-            exit
-        endif
-        loop
-    endif
 
     //Cadastrar
     do while bCadastrar == 1
+        
+        //Variaveis iniciais
+        cSenha := space(12)
+        dCadastro := CToD("")
+        
+        //verificacao
+        cVerificacaoNumero := "1234567890"
+        cVerificacaoMaiusculo := "QWERTYUIOPASDFGHJKLZXCVBNM"
+        cVerificacaoMinusculo := "qwertyuiopasdfghjklzxcvbnm"
+        cVerificacaoEspecial := "'!@#$%¨&*()_-+=`[{~^/?;:.>,<\|}]"
 
         clear
         
@@ -68,14 +78,22 @@ do while bLoop == 1
         @ 07,01 say "1 letra minuscula"
         @ 08,01 say "1 caractere especial"
 
+        //Pegando e guardando a senha
         @ 01,17 get cSenha Valid Len(AllTrim(cSenha)) >= 8
         read
 
-        @ 10,01 say "Digite a data de cadastro: "
+        cGuardarSenha += cSenha
 
-        @ 10,28 get dCadastro
-        read
-        nCodigo++
+        //Variaveis da validacao
+        bValidacaoNumero := .f.
+        bValidacaoMaiusculo := .f.
+        bValidacaoMinusculo := .f.
+        bValidacaoEspecial := .f.
+
+        nLenSenha := Len(AllTrim(cSenha))
+        nCount := 1
+
+        //Menu de sair
         if LastKey() == 27
             nOpcao2 := Alert("Oque deseja fazer?", {"Continuar","Prosseguir","Cancelar"})
             if nOpcao2 == 1
@@ -89,6 +107,40 @@ do while bLoop == 1
             endif
             loop
         endif
+
+        //Validadando as condicoes de senha
+        do while nCount <= nLenSenha
+            cLetrasSenha := SubStr(cSenha, nCount, 1)
+            if cLetrasSenha $ cVerificacaoNumero
+                bValidacaoNumero := .t.
+            endif
+            if cLetrasSenha $ cVerificacaoMaiusculo
+                bValidacaoMaiusculo := .t.
+            endif
+            if cLetrasSenha $ cVerificacaoMinusculo
+                bValidacaoMinusculo := .t.
+            endif
+            if cLetrasSenha $ cVerificacaoEspecial
+                bValidacaoEspecial := .t.
+            endif
+            nCount++
+        enddo
+
+        if bValidacaoNumero == .f. .or. bValidacaoMaiusculo == .f. .or. bValidacaoMinusculo == .f. .or. bValidacaoEspecial == .f.
+            Alert("Senha fraca")
+            loop
+        endif
+
+        //Pegando e guardando a data
+        @ 10,01 say "Digite a data de cadastro: "
+
+        @ 10,28 get dCadastro
+        read
+        cGuardarData += DToC(dCadastro)
+
+        //numero do codigo
+        nCodigo++
+
         clear
         @ 01,01 say "Codigo: " + AllTrim(Str(nCodigo)) + " Senha: " + cSenha
         @ 03,01 say "Deseja sair?"
@@ -105,13 +157,9 @@ do while bLoop == 1
         endif
     enddo
 
-    nAno := Year(dCadastro)
-    nMes := Month(dCadastro) 
-    nDiaAtual := Day(dCadastro)
     nDiasDoMes := 1
-    nSemana := 2
-    nDiaSemana := 1
-    nGrades := 0
+    nSemana := 0
+
 
     //Consultar
     do while bConsultar == 1
@@ -121,6 +169,12 @@ do while bLoop == 1
         @ 01,38 get nCodigoProcurar picture "999"
         read
 
+        if nCodigoProcurar == nCodigo
+            bCodigoExiste := .t.
+        else
+            Alert("Codigo nao existe!")
+            loop
+        endif
         if LastKey() == 27
             nOpcao3 := Alert("Oque deseja fazer?", {"Continuar","Prosseguir","Cancelar"})
             if nOpcao3 == 1
@@ -135,7 +189,24 @@ do while bLoop == 1
             loop
         endif
 
-        do while nCodigoProcurar == nCodigo
+        do while bCodigoExiste == .t.
+
+            do while nPegarSenha1 <= nPegarSenha
+                cSenhaConsulta := SubStr(cGuardarSenha, nPegarSenha1, 1)
+                nPegarSenha1++
+            enddo
+            do while nPegarData1 <= nPegarData
+                cDataConsulta := SubStr(cGuardarData, nPegarData1, 1)
+                nPegarData1++
+            enddo
+
+            dDataConsulta := CToD(cDataConsulta)
+
+            nAno := Year(dDataConsulta)
+            nMes := Month(dDataConsulta) 
+            nDiaAtual := Day(dDataConsulta)
+            nDiaSemana := DoW(dDataConsulta)
+
             //pegando o ultimo dia do mes
             nDia := Day(CTod('01/' + Str(nMes + 1, 2) + '/00')-1)
 
@@ -166,25 +237,30 @@ do while bLoop == 1
                 cMes := "Dezembro"
             endif
 
-            clear
-            @ 00,00 to 09,18
-            @ 01,01 say cMes + " de " + AllTrim(Str(nAno))
 
+            //imprimindo
+            clear
+            @ 00,00 to 02,20
+            @ 01,01 say "Numero do codigo: " + AllTrim(Str(nCodigoProcurar))
+            @ 02,01 say "Senha: " + cSenhaConsulta
+
+            @ 06,06 say cMes + " de " + AllTrim(Str(nAno))
+
+            //calendario
             do while nDiasDoMes >= nDia
-                @ 00,00 to 09,18
+                @ 05,05 to 15,24
                 
                 if nDiaDoMes == nDiaAtual
-                    @ nSemana,nDiaSemana say AllTrim(Str(nDia)) color 'B/W'
+                    @ 7+nSemana,7+nDiaSemana say AllTrim(Str(nDia)) color 'G/W'
                 else
-                    @ nSemana,nDiaSemana say AllTrim(Str(nDia))
+                    @ 7+nSemana,7+nDiaSemana say AllTrim(Str(nDia))
                 endif
 
-                nDiaSemana++
-
-                if nDiaSemana == 7
+                if nDiaSemana == 1
                     nSemana++
-                    nDiaSemana := 1
                 endif
+
+                nDiaDoMes++
 
                 if LastKey() == 27
                     nOpcao4 := Alert("Oque deseja fazer?", {"Continuar","Sair"})
@@ -196,34 +272,32 @@ do while bLoop == 1
                     endif
                     loop
                 endif
-            enddo
 
-            @ 15,01 say "Deseja sair?"
+                @ 15,01 say "Deseja sair?"
+
+                @ 03,14 get cSair picture "@!" Valid cSair $ "SN"
+                read
+        
+                if cSair == "S"
+                    clear
+                    nCodigoProcurar := 0
+                else
+                    clear
+                    loop
+                endif
+            enddo
+            @ 01,01 say "Deseja sair?"
 
             @ 03,14 get cSair picture "@!" Valid cSair $ "SN"
             read
     
             if cSair == "S"
                 clear
-                nCodigoProcurar := 0
+                bConsultar := 0
             else
                 clear
                 loop
             endif
-
         enddo
-
-        @ 01,01 say "Deseja sair?"
-
-        @ 03,14 get cSair picture "@!" Valid cSair $ "SN"
-        read
-
-        if cSair == "S"
-            clear
-            bConsultar := 0
-        else
-            clear
-            loop
-        endif
     enddo
 enddo

@@ -127,3 +127,12 @@ set color 'Cor caractere/cor de fundo'
 
 Colocar ao fim de get e/ou say
 color 'Cor caractere/cor de fundo'
+
+faz com qur
+set wrap on
+
+message ira aparecer no numero que colocar
+set message to (Numero da linha)
+
+prompt 'hfbg' message 'nskjdgfnjksdnf'
+menu to nOpcao
