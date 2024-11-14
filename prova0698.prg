@@ -6,7 +6,7 @@ clear
 
 //Boleans dos do whiles
 bInicio := .t.
-bJogo := .f.
+//bJogo := .f.
 
 do while bInicio == .t.
 
@@ -23,8 +23,6 @@ do while bInicio == .t.
     nErros := 0
     nChances := 6
     nDiminuiChance := 1
-
-    nContador := 1
 
     //Mebros do boneco
     cCabeca := "()"
@@ -65,11 +63,11 @@ do while bInicio == .t.
     clear
 
     @ 10,20 say "digite a Palavra chave: "
-    @ 10,43 get cPalavraChave picture "@!"
+    @ 10,43 get cPalavraChave picture "@!" color("w/w")
     read
     bJogo := .t.
 
-    do while bJogo == .t.
+    do while .t.
 
         clear
 
@@ -126,25 +124,31 @@ do while bInicio == .t.
 
 
         if cLetra $ cLetrasEscolhidas
-            @ 03,01 say "A letra " + cLetra + "já foi escolhida" //color(R/W)
+            @ 03,01 say "A letra " + cLetra + "já foi escolhida" color("R/W")
             loop
         else
             cLetrasEscolhidas += cLetra
         endif
-
+        nContador := 0
         //Achando a letra
         do while nContador <= Len(cPalavraChave)
-            cLetrasPalavra := SubStr(cPalavraChave, nContador, 1)
-            if cLetra $ cLetrasPalavra
-                cPalavraNaForca := SubStr(cLetra, nContador, 1)
-                @ 06, 10+nContador say cPalavraNaForca
+            cLetrasPalavra := SubStr(cPalavraChave, nContador++, 1)
+
+            if cLetra == cLetrasPalavra
+
                 @ 06, 10+nContador say "_"
-            else
+                @ 06, 10+nContador say cLetra
+
+            elseif cLetra != cLetrasPalavra
+
                 nChances -= nDiminuiChance
+
             endif
-            nContador++
         enddo
 
+        inkey(0)
+    enddo
+    
         //Validacao final
         if nChances == 0 .or. cPalavraNaForca == cPalavraChave
             @ 10,01 say "Que pena, voce perdeu :("
@@ -157,8 +161,6 @@ do while bInicio == .t.
                 loop
             else
                 exit
-                bInicio := .f.
             endif
         endif
-    enddo
 enddo

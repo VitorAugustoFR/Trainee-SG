@@ -181,7 +181,11 @@ do while bLoopPrincipal
                 if nCodigo == 5500
                     
                     //Calulo do valor do pedido
-                    nValorPedido += ((nPorcentagemDesconto * (nQuantidade * 1.50)) / 100)
+                    if nPorcentagemDesconto == 0
+                        nValorPedido += (nQuantidade * 1.50)
+                    else
+                        nValorPedido += ((nPorcentagemDesconto * (nQuantidade * 1.50)) / 100)
+                    endif
                     
                     if nQuantidade > nEstoqueAmora
                         Alert("Estoque insulficiente")
@@ -198,11 +202,16 @@ do while bLoopPrincipal
                         nEstoqueAmora -= nQuantidade
                         nLimiteCredito -= nValorPedido
                     endif
+
                 //uva
                 elseif nCodigo == 7744
                     
                     //Calulo do valor do pedido
-                    nValorPedido += ((nPorcentagemDesconto * (nQuantidade * 1.50)) / 100)
+                    if nPorcentagemDesconto == 0
+                        nValorPedido += (nQuantidade * 8)
+                    else
+                        nValorPedido += ((nPorcentagemDesconto * (nQuantidade * 8)) / 100)
+                    endif
                     
                     if nQuantidade > nEstoqueUva
                         Alert("Estoque insulficiente")
@@ -218,11 +227,16 @@ do while bLoopPrincipal
                         nEstoqueUva -= nQuantidade
                         nLimiteCredito -= nValorPedido
                     endif
+
                 //Pepino
                 elseif nCodigo == 4445
                     
                     //Calulo do valor do pedido
-                    nValorPedido += ((nPorcentagemDesconto * (nQuantidade * 1.50)) / 100)
+                    if nPorcentagemDesconto == 0
+                        nValorPedido += (nQuantidade * 3.99)
+                    else
+                        nValorPedido += ((nPorcentagemDesconto * (nQuantidade * 3.99)) / 100)
+                    endif
                     
                     if nQuantidade > nEstoquePepino
                         Alert("Estoque insulficiente")
@@ -239,11 +253,16 @@ do while bLoopPrincipal
                         nEstoquePepino -= nQuantidade
                         nLimiteCredito -= nValorPedido
                     endif
+                    
                 //morango
                 elseif nCodigo == 6565
                     
                     //Calulo do valor do pedido
-                    nValorPedido += ((nPorcentagemDesconto * (nQuantidade * 1.50)) / 100)
+                    if nPorcentagemDesconto == 0
+                        nValorPedido += (nQuantidade * 15.49)
+                    else
+                        nValorPedido += ((nPorcentagemDesconto * (nQuantidade * 15.49)) / 100)
+                    endif
                     
                     if nQuantidade > nEstoqueMorango
                         Alert("Estoque insulficiente")
@@ -260,15 +279,17 @@ do while bLoopPrincipal
                         nEstoqueMorango -= nQuantidade
                         nLimiteCredito -= nValorPedido
                     endif
-                elseif nCodigo != 5500 .and. nCodigo != 7744 .and. nCodigo != 4445 .and. nCodigo != 6565
+
+                elseif !(nCodigo == 5500) .or. !(nCodigo == 7744) .or. !(nCodigo == 4445) .or. !(nCodigo == 6565)
                     Alert("Codigo nao existe")
                     loop
                 endif
 
                 @ 19,10 say "Valor do pedido: " + AllTrim(Str(nValorPedido))
                 @ 20,10 say "Valor Total....: " + AllTrim(Str(nValorTotal))
+                @ 21,10 say "Credito restante....: " + AllTrim(Str(nLimiteCredito))
 
-                @ 22,01 say "Deseja continuar comprando?"
+                @ 23,01 say "Deseja continuar comprando?"
                 @ 23,01 get cEscolhaUsuario picture "@!" valid cEscolhaUsuario $ "SN"
                 read
                 if cEscolhaUsuario == "S"
