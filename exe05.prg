@@ -1,16 +1,22 @@
 clear
+nNumeroA := 0
+nNumeroB := 0
+nNumeroC := 0
 
-nNumeroA := 3
-nNumeroB := 1
+@ 01,01 say "Digite 2 numeros para invertelos na memoria:"
+@ 02,01 say "Primeiro numero:"
+@ 03,01 say "Segundo numero:"
 
-@ 00,00 to 06,22
+@ 02,18 get nNumeroA
+@ 03,16 get nNumeroB
+read
 
-@ 01,01 say "Antigo valor de A = " + alltrim(str(nNumeroA))
-@ 02,01 say "Antigo valor de B = " + alltrim(str(nNumeroB))
+clear
+@ 01,01 say "A variavel A vale antes da inversao: " + AllTrim(Str(nNumeroA))
+@ 02,01 say "A variavel B vale antes da inversao: " + AllTrim(Str(nNumeroB))
+nNumeroC := nNumeroB
+nNumeroB := nNumeroA
+nNumeroA := nNumeroC
 
-nGuardarA := nNumeroA
-nNumeroA := nNumeroB
-nNumeroB := nGuardarA
-
-@ 04,01 say "Novo valor de A = " + alltrim(str(nNumeroA))
-@ 05,01 say "Novo valor de B = " + alltrim(str(nNumeroB))
+@ 04,01 say "Em um passe de magica a variavel A vale: " + AllTrim(Str(nNumeroA))
+@ 05,01 say "E a variavel B agora vale: " + AllTrim(Str(nNumeroB))

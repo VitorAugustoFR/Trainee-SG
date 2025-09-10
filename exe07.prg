@@ -1,33 +1,19 @@
 clear
-//declarando váriaveis
-nNumeroUm := space(50)
-nNumeroDois := space(50)
-cOperador := space(1)
+nNumeroUm   := 0
+nNumeroDois := 0
 
-//demonstrando
-@ 00,00 to 07,70
-@ 01,01 say "Digite dois numeros e um operador(+, -, *, /) para realiza-lo"
-@ 02,01 say "Primeiro numero"
-@ 04,01 say "Operador"
-@ 05,01 say "Segundo numero"
+@ 01,01 say "Digite dois valores para realizar as quatro operacoes:"
+@ 02,01 say "Valor 1:"
+@ 03,01 say "Valor 2:"
 
-@ 03,16 get nNumeroUm
-@ 04,09 get cOperador
-@ 05,15 get nNumeroDois
+@ 02,09 get nNumeroUm
+@ 03,09 get nNumeroDois
 read
 
-if (cOperador == "+")
-    nAdicao := val(nNumeroUm) + val(nNumeroDois)
-    @ 07,01 say "A adicao dos dois numeros resultou em = " + alltrim(str(nAdicao))
-    elseif (cOperador == "-")
-        nSubtracao := val(nNumeroUm) - val(nNumeroDois)
-        @ 07,01 say "A subtracao dos dois numeros resultou em = " + alltrim(str(nSubtracao))
-        elseif (cOperador == "*")
-            nMultiplicacao := val(nNumeroUm) * val(nNumeroDois)
-            @ 07,01 say "A multiplicacao dos dois numeros resultou em = " + alltrim(str(nMultiplicacao))
-            elseif (cOperador == "/")
-                nDivisao := val(nNumeroUm) / val(nNumeroDois)
-                @ 07,01 say "A divisao dos dois numeros resultou em = " + alltrim(str(nDivisao))
-            else
-                @ 07,01 say "Insira operadores e/ou numeros validos"
-endif
+clear
+@ 00,00 to 07,50
+@ 01,01 say "As quatro operacoes basicas com o numero " + AllTrim(Str(nNumeroUm)) + " e " + AllTrim(Str(nNumeroDois)) + ":"
+@ 03,01 say "Adicao:" + AllTrim(Str(nNumeroUm + nNumeroDois))
+@ 04,01 say "Subtracao: " + AllTrim(Str(nNumeroUm - nNumeroDois))
+@ 05,01 say "Multiplicacao: " + AllTrim(Str(nNumeroUm * nNumeroDois))
+@ 06,01 say "divisao: " + AllTrim(Str(nNumeroUm / nNumeroDois))

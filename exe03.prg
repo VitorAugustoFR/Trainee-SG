@@ -1,32 +1,16 @@
 clear
+nNumeroUm   := 0
+nNumeroDois := 0
 
+@ 01,01 say "Digite o primeiro numero:"
+@ 02,01 say "Digite o segundo numero:"
 
-do while .t.
+@ 01,27 get nNumeroUm
+@ 02,25 get nNumeroDois
+read
 
-    nNumeroA := 0
-    nNumeroB := 0
+nProduto    := nNumeroUm * nNumeroDois
 
-    @ 00,00 to 05,40
+@ 05,01 say "O produto dos numeros " + AllTrim(Str(nNumeroUm)) + " * " + AllTrim(Str(nNumeroDois)) + " = " + AllTrim(Str(nProduto))  
 
-    @ 01,01 say "Digite o valor do numero A = "
-    @ 02,01 say "Digite o valor do numero B = "
-
-    @ 01,30 get nNumeroA
-    @ 02,30 get nNumeroB
-    read
-
-    nProduto := nNumeroA * nNumeroB
-
-    if LastKey() == 27
-        exit
-    endif
-
-    @ 03,01 say "valor numero A= " + alltrim(str(nNumeroA)) + ". Valor numero B= " + alltrim(str(nNumeroB))
-    @ 04,01 say "Produto de A e B= " + alltrim(str(nProduto))
-
-    Inkey( 0 )
-
-enddo
-
-@ 03,01 say "valor numero A= " + alltrim(str(nNumeroA)) + ". Valor numero B= " + alltrim(str(nNumeroB))
-@ 04,01 say "Produto de A e B= " + alltrim(str(nProduto))
+//@ 01,01 say "O numero: " + AllTrim(Str(nNumeroUm)) + ", Multiplicado pelo numero: " + AllTrim(Str(nNumeroDois)) + ", e igual a: " + AllTrim(Str(nProduto))
